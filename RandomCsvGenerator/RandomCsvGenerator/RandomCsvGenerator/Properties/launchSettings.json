@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RandomCsvGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\test\\many-files 100 C:\\test\\output"
+    }
+  }
+}
