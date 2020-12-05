@@ -29,16 +29,18 @@ namespace RandomCsvGenerator
             }
 
             var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories).ToList();
+            var linesToTakeFromEachFile = lines / files.Count;
 
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < lines; i++)
+            foreach (var file in files)
             {
-                var fileIndex = new Random().Next(0, files.Count);
-                var fileLines = File.ReadAllLines(files[fileIndex]);
-                var fileLineIndex = new Random().Next(0, fileLines.Length);
-                stringBuilder.AppendLine(fileLines[fileLineIndex]);
+                var fileLines = File.ReadAllLines(file);
+                for (int i = 0; i < linesToTakeFromEachFile; i++)
+                {
+                    var lineIndex = new Random().Next(0, fileLines.Length);
+                    stringBuilder.AppendLine(fileLines[lineIndex]);
+                }
             }
-
 
             var outputPath = Path.Combine(outputFolder, "radnom-csv.csv");
             File.WriteAllText(outputPath, stringBuilder.ToString());
