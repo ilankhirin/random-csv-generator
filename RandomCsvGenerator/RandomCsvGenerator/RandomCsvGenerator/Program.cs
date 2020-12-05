@@ -30,8 +30,9 @@ namespace RandomCsvGenerator
 
             var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories).ToList();
             var linesToTakeFromEachFile = lines / files.Count;
-
+            Console.WriteLine(linesToTakeFromEachFile);
             StringBuilder stringBuilder = new StringBuilder();
+            var index = 0;
             foreach (var file in files)
             {
                 var fileLines = File.ReadAllLines(file);
@@ -40,6 +41,8 @@ namespace RandomCsvGenerator
                     var lineIndex = new Random().Next(0, fileLines.Length);
                     stringBuilder.AppendLine(fileLines[lineIndex]);
                 }
+                index++;
+                Console.WriteLine($"Finished {index}/{files.Count}");
             }
 
             var outputPath = Path.Combine(outputFolder, "radnom-csv.csv");
