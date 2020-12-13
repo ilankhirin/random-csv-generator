@@ -33,7 +33,7 @@ namespace RandomCsvGenerator
 
             StringBuilder stringBuilder = new StringBuilder();
             var index = 0;
-            foreach (var line in File.ReadAllLines(inputFile))
+            foreach (var line in File.ReadLines(inputFile))
             {
                 var id = line.Split(';')[1];
                 if (idsToNumberOfOccurrences.ContainsKey(id))
