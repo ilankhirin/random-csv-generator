@@ -10,7 +10,7 @@ namespace RandomCsvGenerator
     {
         static void Main(string[] args)
         {
-            if (args.Length < 4)
+            if (args.Length < 3)
             {
                 Console.WriteLine("I Except to get: <input_file> <ids_file> <output_folder>");
                 return;
