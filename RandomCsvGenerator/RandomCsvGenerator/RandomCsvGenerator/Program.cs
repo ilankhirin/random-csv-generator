@@ -41,12 +41,12 @@ namespace RandomCsvGenerator
                     index++;
                     idsToNumberOfOccurrences[id]++;
                     stringBuilder.AppendLine(line);
+                    if (index % 1000 == 0)
+                    {
+                        Console.WriteLine($"{index} lines written");
+                    }
                 }
 
-                if (index % 1000 == 0)
-                {
-                    Console.WriteLine($"{index} lines written");
-                }
             }
 
             var outputPath = Path.Combine(outputFolder, "ids-csv.csv");
