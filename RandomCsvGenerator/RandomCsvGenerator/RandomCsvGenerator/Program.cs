@@ -29,9 +29,15 @@ namespace RandomCsvGenerator
                 return;
             }
 
+            var outputPath = Path.Combine(outputFolder, "ids-csv.csv");
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+            }
+
             var idsToNumberOfOccurrences = ConstructIdsDictionary(idsFile);
 
-            StringBuilder stringBuilder = new StringBuilder();
+            List<string> lines = new List<string>();
             var index = 0;
             foreach (var line in File.ReadLines(inputFile))
             {
@@ -40,21 +46,17 @@ namespace RandomCsvGenerator
                 {
                     index++;
                     idsToNumberOfOccurrences[id]++;
-                    stringBuilder.AppendLine(line);
-                    if (index % 1000 == 0)
+                    lines.Add(line);
+                    if (lines.Count >= 1000)
                     {
+                        File.AppendAllLines(outputPath, lines);
+                        lines.Clear();
                         Console.WriteLine($"{index} lines written");
                     }
                 }
-
             }
 
-            var outputPath = Path.Combine(outputFolder, "ids-csv.csv");
-            if (File.Exists(outputPath))
-            {
-                File.Delete(outputPath);
-            }
-            File.WriteAllText(outputPath, stringBuilder.ToString());
+            File.AppendAllLines(outputPath, lines);
 
             var occurrncesContent = idsToNumberOfOccurrences.Select(x => $"{x.Key},{x.Value}");
             var occurrncesFilePath = Path.Combine(outputFolder, "occurrnces.csv");
